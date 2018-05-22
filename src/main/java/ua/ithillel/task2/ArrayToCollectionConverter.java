@@ -1,4 +1,4 @@
-package ua.ithillel.task1;
+package ua.ithillel.task2;
 
 import java.util.Collection;
 

@@ -3,7 +3,7 @@ package ua.ithillel;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ua.ithillel.task1.ArrayToCollectionConverter;
+import ua.ithillel.task2.ArrayToCollectionConverter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
