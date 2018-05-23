@@ -1,16 +1,11 @@
 package ua.ithillel.task1;
 
-import sun.jvmstat.perfdata.monitor.PerfStringVariableMonitor;
-import sun.misc.IOUtils;
-
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Author: anbo
@@ -18,40 +13,33 @@ import java.util.Scanner;
  */
 public class WordFinder {
 
-    private final List<Character> UNAVAILABLE_SYMBOLS = new ArrayList<>(Arrays.asList('.','/','-',';',':',','));
+    private final List<Character> UNAVAILABLE_SYMBOLS = new ArrayList<>(Arrays.asList('.', '/', '-', ';', ':', ',','\"'));
 
-    public boolean find(String pathToFile, String targetWord) {
-        String filteredWord = filterInputText(targetWord);
-        String textFromFile = parseFile(pathToFile);
-
-
-    }
-
-    protected String filterInputText(String text) {
-        StringBuilder result = new StringBuilder();
-        char[] symbols = text.toCharArray();
-        for (char symbol : symbols) {
-            if (!UNAVAILABLE_SYMBOLS.contains(symbol)) {
-                result.append(symbol);
-            }
+    public void find(String pathToFile) {
+        File file = new File(pathToFile);
+        String textFromFile = parseFile(file);
+        String[] words = textFromFile.split(" ");
+        System.out.println("The file "+file.getName() +" contains "+words.length+" words");
+        for (int iterator = 0; iterator < words.length; iterator++) {
+            System.out.println(iterator+1+")"+words[iterator]);
         }
-        return result.toString();
     }
 
-    protected String parseFile (String absolutePath) {
+    protected String parseFile(File file) {
         StringBuilder result = new StringBuilder();
-        File file = new File(absolutePath);
         if (validateInputData(file)) {
-            Scanner sc = null;
             try {
-                sc = new Scanner(file);
-            } catch (FileNotFoundException e) {
+                FileInputStream fis = new FileInputStream(file);
+                char current;
+                while (fis.available() > 0) {
+                    current = (char) fis.read();
+                    if (!UNAVAILABLE_SYMBOLS.contains(current)) {
+                        result.append(current);
+                    }
+                }
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-            while (sc.hasNextLine()) {
-                result.append(sc.nextLine());
-            }
-            sc.close();
         }
         return result.toString();
     }

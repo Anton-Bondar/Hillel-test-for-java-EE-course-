@@ -9,7 +9,7 @@ public class IncrementSynchronize {
 
     private Object lock = new Object();
 
-    public synchronized int getNextValue1() {
+    synchronized int getNextValue1() {
         value++;
         return value;
     }
